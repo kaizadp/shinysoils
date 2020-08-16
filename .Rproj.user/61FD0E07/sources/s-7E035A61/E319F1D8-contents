@@ -1,0 +1,230 @@
+---
+title: "About This Website"
+---
+
+---
+output: html_document
+runtime: shiny
+
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+# Shiny Isotopes
+Basic calculations for C and N stable isotopes
+
+---
+
+### {.tabset .tabset-fade .tabset-pills}
+
+#### enrichment of mixture
+
+```{r, echo=FALSE}
+library(shiny)
+library(shinythemes)
+
+# ui ----
+ui = (fluidPage(
+  #theme = shinytheme("sandstone"),
+  shinythemes::themeSelector(),
+  
+  h4("Calculate the target enrichment of a mixture"),
+  br(),
+  
+  sidebarLayout(position = "left",
+    sidebarPanel(
+      h3("compound 1"),
+      textInput("R1", "enrichment", value = "0.010"),
+      textInput("M1", "mass", value = "100"),
+      
+      h3("compound 2"),
+      textInput("R2", "enrichment", value = "0.99"),
+      textInput("M2", "mass", value = "1")
+    ),
+    
+    mainPanel(
+      h2("mass"),
+      textOutput("mass_total"),
+      h2("enrichment"),
+      textOutput("enrich_total")
+    )
+  )
+))
+
+
+
+# server ----
+server = function(input, output) {
+  
+  # inputs ----
+  
+  mass1 <- reactive({
+    wtInput <- as.numeric(input$M1)
+    wtInput
+  })
+  
+  mass2 <- reactive({
+    wtInput <- as.numeric(input$M2)
+    wtInput
+  })
+  
+  enrich1 <- reactive({
+    wtInput <- as.numeric(input$R1)
+    wtInput
+  })
+  
+  enrich2 <- reactive({
+    wtInput <- as.numeric(input$R2)
+    wtInput
+  })
+  
+  
+  # outputs ----
+  
+  output$mass_total <- renderText({
+    round(mass1()+mass2(),2)
+  })
+  
+  output$enrich_total <- renderText({
+    round((mass1()*enrich1() + mass2()*enrich2())/ (mass1()+mass2()), 2)
+  })
+}
+
+shinyApp(ui = ui, server = server)
+```
+
+
+#### convert R to delta
+
+```{r, echo=FALSE}
+library(shiny)
+
+# ui ----
+ui = (fluidPage(
+  sidebarLayout(position = "left",
+    sidebarPanel(
+      h3("C"),
+      textInput("enrich_c", "enrichment", value = "0.12"),
+
+      h3("N"),
+      textInput("enrich_n", "enrichment", value = "0.12"),
+    ),
+    
+    mainPanel(
+      h2("delta-C"),
+      textOutput("delta_c"),
+      h2("delta-N"),
+      textOutput("delta_n")
+    )
+  )
+))
+
+
+
+# server ----
+server = function(input, output) {
+  
+  # inputs ----
+  
+  Cenrich <- reactive({
+    wtInput <- as.numeric(input$enrich_c)
+    wtInput
+  })
+  
+  Nenrich <- reactive({
+    wtInput <- as.numeric(input$enrich_n)
+    wtInput
+  })
+
+  
+  # outputs ----
+  
+  output$delta_c <- renderText({
+    ## REFERENCE VALUES FOR STANDARDIZATION
+    C_VPDB = 0.011237 # 13C/12C ratio
+    N_AIR = 0.003676 # 15N/14N ratio
+    ((Cenrich()/C_VPDB) - 1) * 1000
+  })
+  
+  output$delta_n <- renderText({
+    ## REFERENCE VALUES FOR STANDARDIZATION
+    C_VPDB = 0.011237 # 13C/12C ratio
+    N_AIR = 0.003676 # 15N/14N ratio
+    ((Nenrich()/N_AIR) - 1) * 1000
+  })
+}
+
+shinyApp(ui = ui, server = server)
+```
+
+#### navlistpanel
+
+```{r, echo=FALSE}
+library(shiny)
+
+# ui ----
+ui = (fluidPage(
+  navlistPanel(
+    "R to delta",
+    tabPanel("C",
+             h3("input enrichment"),
+             textInput("enrich_c", " ", value = "0.10"),
+             br(),
+             h3("delta"),
+             textOutput("delta_c")),
+    tabPanel("N",
+             h3("input enrichment"),
+             textInput("enrich_n", " ", value = "0.10"),
+             br(),
+             h3("delta"),
+             textOutput("delta_n"))
+    )
+  )
+)
+
+
+
+# server ----
+server = function(input, output) {
+  
+  # inputs ----
+  
+  Cenrich <- reactive({
+    wtInput <- as.numeric(input$enrich_c)
+    wtInput
+  })
+  
+  Nenrich <- reactive({
+    wtInput <- as.numeric(input$enrich_n)
+    wtInput
+  })
+
+  
+  # outputs ----
+  
+  output$delta_c <- renderText({
+    ## REFERENCE VALUES FOR STANDARDIZATION
+    C_VPDB = 0.011237 # 13C/12C ratio
+    N_AIR = 0.003676 # 15N/14N ratio
+    ((Cenrich()/C_VPDB) - 1) * 1000
+  })
+  
+  output$delta_n <- renderText({
+    ## REFERENCE VALUES FOR STANDARDIZATION
+    C_VPDB = 0.011237 # 13C/12C ratio
+    N_AIR = 0.003676 # 15N/14N ratio
+    ((Nenrich()/N_AIR) - 1) * 1000
+  })
+}
+
+shinyApp(ui = ui, server = server)
+```
+
+
+## source
+
+Kaizad F. Patel
+
+https://github.com/kaizadp/shinyapps
+
