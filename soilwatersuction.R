@@ -36,7 +36,7 @@ ui = (fluidPage(
              ),
     
     tabPanel("calculations",
-             "pF = log<sub>10</sub>(suction as cm)",
+             "pF = log10 (suction as cm)",
              br(),
              "cm = kPa/10"
              )
