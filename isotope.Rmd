@@ -87,7 +87,7 @@ server = function(input, output) {
   })
   
   output$enrich_total <- renderText({
-    round((mass1()*enrich1() + mass2()*enrich2())/ (mass1()+mass2()), 2)
+    round((mass1()*enrich1() + mass2()*enrich2())/ (mass1()+mass2()), 5)
   })
 }
 
