@@ -10,7 +10,40 @@ runtime: shiny
 
 ---
 
+<style>
+  .nav-pills>li>a {
+     color: black;
+      background-color: #a0c4ff
+     }
+  .nav-pills>li>a:hover, .nav-pills>li>a:focus, .nav-pills>li.active>a, .nav-pills>li.active>a:hover, .nav-pills>li.active>a:focus{
+     color: white;
+     background-color: #023e8a;
+     }
 
+</style>
+
+
+```{r, eval = FALSE, echo=FALSE}
+# CSS styling for tabs
+<style>
+  .nav-pills>li>a {
+     color: pink;
+     }
+  .nav-pills>li>a:hover, .nav-pills>li>a:focus, .nav-pills>li.active>a, .nav-pills>li.active>a:hover, .nav-pills>li.active>a:focus{
+     color: black;
+     background-color: red;
+     }
+  .nav-pills > li:nth-of-type(2)>a {
+     color: green;
+     }
+  .nav-pills > li:nth-of-type(2)>a:hover, .nav-pills > li:nth-of-type(2)>a:focus, .nav-pills > li:nth-of-type(2).active>a {
+     color: black;
+     background-color: green;
+     }
+</style>
+```
+
+---
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE)
 ```
