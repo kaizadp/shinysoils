@@ -1,8 +1,12 @@
 ---
+Title: ShinySoils
 output: html_document
 runtime: shiny
 ---
+
 # ShinySoils -- practical tools for the soil science laboratory  
+
+*kaizadp - 2021*
 
 ---
 
@@ -12,8 +16,31 @@ knitr::opts_chunk$set(echo = FALSE)
 ```
 
 ### {.tabset .tabset-fade .tabset-pills}
+#### Welcome
 
-#### soil water suction
+---
+
+Welcome to `ShinySoils`. 
+
+This Shiny App contains basic tools for soil science calculations.
+
+This is still a work in progress, and more tools will be added in due time. 
+
+If you have suggestions or comments, please use the `Issues` tab in the [GitHub repository](https://github.com/kaizadp/shinysoils). 
+
+---
+
+**Kaizad F. Patel - created Aug 2020**  
+
+Last updated: `r Sys.Date()`
+
+Made using ShinyApps  
+Code available on [GitHub](https://github.com/kaizadp/shinysoils)  
+Twitter: [kaiz_p](https://twitter.com/kaiz_p)
+
+
+
+#### Soil Water Suction
 ```{r}
 source("soilwatersuction.R")
 
@@ -24,7 +51,200 @@ shinyApp(ui = ui, server = server)
 
 
 
-#### isotopes
+#### Stable Isotopes
+
+---
+
+Use this handy units converter for ^13^C and ^15^N stable isotopes.
+
+---
+
+```{r}
+source("isotopes.R")
+```
+
+##### {.tabset .tabset-fade .tabset-pills }
+
+###### Carbon
+
+
+---
+
+<div class = "row">
+  
+<div class = "col-md-4">
+
+**convert from R**
+
+```{r}
+shinyApp(ui = carbon_from_r()$ui, server = carbon_from_r()$server)
+```
+
+</div>
+  
+<div class = "col-md-4">
+
+**convert from F**
+
+```{r}
+shinyApp(ui = carbon_from_f()$ui, server = carbon_from_f()$server)
+```
+</div>
+
+  
+<div class = "col-md-4">
+
+**convert from δ**
+
+```{r}
+shinyApp(ui = carbon_from_d()$ui, server = carbon_from_d()$server)
+```
+
+</div>
+</div>
+
+
+
+###### Nitrogen
+
+---
+
+<div class = "row">
+  
+<div class = "col-md-4">
+
+**convert from R**
+
+```{r}
+shinyApp(ui = nitrogen_from_r()$ui, server = nitrogen_from_r()$server)
+```
+
+</div>
+  
+<div class = "col-md-4">
+
+**convert from F**
+
+```{r}
+shinyApp(ui = nitrogen_from_f()$ui, server = nitrogen_from_f()$server)
+```
+</div>
+
+  
+<div class = "col-md-4">
+
+**convert from δ**
+
+```{r}
+shinyApp(ui = nitrogen_from_d()$ui, server = nitrogen_from_d()$server)
+```
+
+</div>
+</div>
+
+###### Mixing model
+
+---
+
+Two pool mixing model, to determine the enrichment of a mixture, given the enrichments of two sources.
+
+You can use R or δ for the calculations, but keep it consistent.
+
+```{r}
+shinyApp(ui = mixing_model()$ui, server = mixing_model()$server)
+```
+
+###### Calculations
+
+Notations and Calculations
+
+---
+
+**fractional abundance (F)**
+
+$F = \frac{heavy}{heavy + light}$
+
+$F^{13}C = \frac{^{13}C}{^{13}C + ^{12}C}$
+
+$F^{15}N = \frac{^{15}N}{^{15}N + ^{14}N}$
+
+<br>
+
+
+**atom percent (at%)**
+
+$at = F * 100$
+
+$at^{13}C = (\frac{^{13}C}{^{13}C + ^{12}C}) * 100$
+
+<br>
+
+
+**isotope ratio (R)**
+
+$R = \frac{heavy}{light}$
+
+$^{13}R = \frac{^{13}C}{^{12}C}$
+
+$^{15}R = \frac{^{15}N}{^{14}N}$
+
+<br>
+
+
+$^{13}R = \frac{^{13}F}{(1 - ^{13}F)}$
+
+$^{13}F = \frac{^{13}R}{(1 + ^{13}R)}$
+
+<br>
+
+
+**delta (δ)** *units permil, ‰*
+
+$δ = \frac{R_{sample}}{R_{standard} - 1} * 1000$
+
+$δ^{13}C = \frac{^{13}R_{sample}}{^{13}R_{VPDB} - 1} * 1000$
+
+<br>
+
+
+**to calculate the enrichment of a mixture** *two pool mixing model*
+
+$Mass_{mixture} * R_{mixture} = (Mass_1 * R_1) + (Mass_2 * R_2)$
+
+$Mass_{mixture} * δ_{mixture} = (Mass_1 * δ_1) + (Mass_2 * δ_2)$
+
+
+
+
+
+###### Standard values
+
+---
+
+- **Vienna-PeeDee Belemnite (VPDB)** ^13^C/^12^C = 0.011180
+
+
+- **Air** ^15^N/^14^N = 0.0036765
+
+
+```{r, eval=FALSE}
+library(tibble)
+
+standards = 
+  tribble(
+    ~standard , ~ratio, ~value,
+    "Vienna PDB", "13C/12C", 0.0036765
+  )
+
+standards %>%
+  knitr::kable("simple")
+```
+
+
+
+
+###### Old app
+
 
 ```{r}
 source("isotopes.R")
@@ -34,11 +254,3 @@ shinyApp(ui = ui, server = server)
 
 
 
-### 
-
----
-
-**Kaizad F. Patel - Aug 2020**  
-Made using ShinyApps  
-Code available on [GitHub](https://github.com/kaizadp/shiny)  
-Twitter: [kaiz_p](https://twitter.com/kaiz_p)
