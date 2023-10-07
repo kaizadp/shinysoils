@@ -1,12 +1,12 @@
 ---
-Title: ShinySoils
+title: ShinySoils
 output: html_document
 runtime: shiny
 ---
 
 # ShinySoils -- practical tools for the soil science laboratory  
 
-*kaizadp - 2021*
+*kaizadp - 2023*
 
 ---
 
@@ -49,9 +49,10 @@ knitr::opts_chunk$set(echo = FALSE)
 ```
 
 ### {.tabset .tabset-fade .tabset-pills}
+
 #### Welcome
 
----
+***
 
 Welcome to `ShinySoils`. 
 
@@ -61,7 +62,7 @@ This is still a work in progress, and more tools will be added in due time.
 
 If you have suggestions or comments, please use the `Issues` tab in the [GitHub repository](https://github.com/kaizadp/shinysoils). 
 
----
+***
 
 **Kaizad F. Patel - created Aug 2020**  
 
@@ -86,11 +87,11 @@ shinyApp(ui = ui, server = server)
 
 #### Stable Isotopes
 
----
+***
 
 Use this handy units converter for ^13^C and ^15^N stable isotopes.
 
----
+***
 
 ```{r}
 source("isotopes.R")
@@ -101,7 +102,7 @@ source("isotopes.R")
 ###### Carbon
 
 
----
+***
 
 <div class = "row">
   
@@ -140,7 +141,7 @@ shinyApp(ui = carbon_from_d()$ui, server = carbon_from_d()$server)
 
 ###### Nitrogen
 
----
+***
 
 <div class = "row">
   
@@ -177,7 +178,7 @@ shinyApp(ui = nitrogen_from_d()$ui, server = nitrogen_from_d()$server)
 
 ###### Mixing model
 
----
+***
 
 Two pool mixing model, to determine the enrichment of a mixture, given the enrichments of two sources.
 
@@ -191,7 +192,7 @@ shinyApp(ui = mixing_model()$ui, server = mixing_model()$server)
 
 Notations and Calculations
 
----
+***
 
 **fractional abundance (F)**
 
@@ -252,7 +253,7 @@ $Mass_{mixture} * δ_{mixture} = (Mass_1 * δ_1) + (Mass_2 * δ_2)$
 
 ###### Standard values
 
----
+***
 
 - **Vienna-PeeDee Belemnite (VPDB)** ^13^C/^12^C = 0.011180
 

@@ -5,8 +5,9 @@ account: kaizadp
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 2674203
-bundleId: 3520771
+bundleId: 7774256
 url: https://kaizadp.shinyapps.io/shinysoils/
-when: 1597546182.7759
+when: 1696645839.87955
+lastSyncTime: 1696645839.87957
 asMultiple: TRUE
 asStatic: FALSE
